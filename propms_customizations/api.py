@@ -21,10 +21,13 @@ def make_brokerage_invoice(customer,amount):
     return invoice
     
 @frappe.whitelist()
-def create_customer_from_lead(lead,first_name):
+def create_customer_from_lead(lead):
+
+    lead = frappe.get_doc("Lead",lead)
+
     customer = frappe.get_doc({
         "doctype": "Customer",
-        "customer_name": first_name,
+        "customer_name": lead.first_name,
         "customer_type": "Individual",
         "from_lead": lead
     })
